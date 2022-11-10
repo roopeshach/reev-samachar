@@ -8,6 +8,8 @@ from .models import News
 from .forms import NewsForm
 from django.http import HttpResponse, JsonResponse
 from django.views.generic import ListView
+from facebook_scraper import get_posts
+
 
 def scrape(request):
     session = requests.Session()
@@ -87,3 +89,9 @@ def single_news_scrape(request,  id ) :
 
     return news
 
+
+def facebook_details(request):
+    for post in get_posts('nepalpolice', pages=1, cookies='cookies.txt'):
+        print(post)
+    
+    return JsonResponse({"message": "success"})
